@@ -13,14 +13,12 @@ import { Link } from 'react-router-dom'
 const SearchBox = () => {
 
     const [query, setQuery] = useState("")
-    const [data, setData] = useState([])
+    const [getData, setData] = useState([])
 
     useEffect(() => {
         const fetchNews = async () => {
-            const res = await axios.get(`https://jsonplaceholder.typicode.com/posts`)
-            // https://newsapi.org/v2/everything?q=${query}&apiKey=b8fb4a48fea24491b78f1818e9f33ae8
-            // setData(res.data.articles)
-            setData(res.data.slice(0, 6))
+            const res = await axios.get(`https://newsapi.org/v2/everything?q=${query}&apiKey=b8fb4a48fea24491b78f1818e9f33ae8`)
+            setData(res.data.articles)
         }
         if (query.length === 0 || query.length > 2) fetchNews()
     }, [query])
@@ -35,23 +33,23 @@ const SearchBox = () => {
                                 type="text"
                                 placeholder='Search...'
                                 className='search'
-                                onChange={e => setQuery(e.target.value.toLowerCase())} />
+                                onChange={(e) => setQuery(e.target.value.toLowerCase())} />
                         </Form.Group>
                     </Form>
                     <hr />
                     <small className='my-0 py-0' style={{ color: "grey", textAlign: "left" }}>Type more than 2 characters to see the final result</small>
                 </Col>
 
-                {data.map((item) => (
-                    <Col md={4} className="m-auto my-2">
-                        <Card style={{ width: '18rem' }} key={item.id}>
-                            <Card.Img variant="top" src={item.urlToImage} />
+                {getData?.slice(0,6).map((article) => (
+                    <Col md={4} className="m-auto my-2" key={article.source.id}>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Img variant="top" src={article.urlToImage} />
                             <Card.Body>
-                                <Card.Title>{item.title}</Card.Title>
+                                <Card.Title>{article.title}</Card.Title>
                                 <Card.Text>
-                                    {item.body}
+                                    {article.description}
                                 </Card.Text>
-                                <Link to={`/post/${item.id}`} variant="outline-primary">
+                                <Link to={`/post/${article.id}`} variant="outline-primary">
                                     Read More...
                                 </Link>
                             </Card.Body>
