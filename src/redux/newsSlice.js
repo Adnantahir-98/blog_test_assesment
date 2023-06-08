@@ -14,10 +14,8 @@ const initialState = {
 
 export const GetNews = createAsyncThunk('GetNews', async(body) => {
     try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', body)
-        // https://newsapi.org/v2/top-headlines?country=us&apiKey=dbe57b028aeb41e285a226a94865f7a7
-        // return response.data.articles;
-        return response.data
+        const response = await axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=b8fb4a48fea24491b78f1818e9f33ae8', body)
+        return response.data.articles;
         // dbe57b028aeb41e285a226a94865f7a7
         // b8fb4a48fea24491b78f1818e9f33ae8
     } catch (error) {

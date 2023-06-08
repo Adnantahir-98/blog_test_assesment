@@ -11,15 +11,15 @@ import {BiArrowBack} from 'react-icons/bi'
 
 const PostDetails = () => {
 
-  const [product, setProduct] = useState({})
+  const [article, setArticle] = useState({})
 
   const { id } = useParams()
 
   useEffect(() => {
     const fetchById = async () => {
       try {
-        const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-        setProduct(response.data)
+        const response = await axios.get(`https://newsapi.org/v2/top-headlines/sources?id=${id}apiKey=API_KEY=b8fb4a48fea24491b78f1818e9f33ae8`)
+        setArticle(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -32,9 +32,9 @@ const PostDetails = () => {
       <Link to="/"><BiArrowBack /> Home</Link>
       <Row>
         <Col md={8} className="m-auto">
-          <h2>{product.title}</h2>
-          <img src="https://images.pexels.com/photos/1659437/pexels-photo-1659437.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className='img-fluid w-75' alt="" />
-          <p>{product.body}</p>
+          <h2>{article.title}</h2>
+          <img src={article.urlToImage} className='img-fluid w-75' alt="" />
+          <p>{article.body}</p>
         </Col>
       </Row>
     </Container>
